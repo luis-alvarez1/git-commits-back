@@ -7,6 +7,7 @@ import { FindCommitsDto } from './dto/find-all-commits.dto';
 export class CommitsService {
   private octokit: Octokit;
   constructor() {
+    console.log(process.env.TOKEN);
     this.octokit = new Octokit({
       auth: process.env.TOKEN,
     });

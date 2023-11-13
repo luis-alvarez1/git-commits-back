@@ -11,10 +11,6 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  app.enableCors({
-    allowedHeaders: '*',
-    origin: '*',
-  });
 
   await app.listen(3000);
 }

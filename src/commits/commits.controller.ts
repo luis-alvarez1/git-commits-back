@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Param, Post } from '@nestjs/common';
 import { CommitsService } from './commits.service';
 import { FindCommitsDto } from './dto/find-all-commits.dto';
 
@@ -6,12 +6,12 @@ import { FindCommitsDto } from './dto/find-all-commits.dto';
 export class CommitsController {
   constructor(private readonly commitsService: CommitsService) {}
 
-  @Get()
+  @Post()
   findAll(@Body() dto: FindCommitsDto) {
     return this.commitsService.findAll(dto);
   }
 
-  @Get(':id')
+  @Post(':id')
   findOne(@Param('id') id: string, @Body() dto: FindCommitsDto) {
     return this.commitsService.findOne(id, dto);
   }

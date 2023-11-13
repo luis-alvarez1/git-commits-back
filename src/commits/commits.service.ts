@@ -1,45 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCommitDto } from './dto/create-commit.dto';
-import { UpdateCommitDto } from './dto/update-commit.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+
 import { Octokit } from 'octokit';
+import { FindCommitsDto } from './dto/find-all-commits.dto';
 
 @Injectable()
 export class CommitsService {
-  create(createCommitDto: CreateCommitDto) {
-    return 'This action adds a new commit';
-  }
-
-  async findAll() {
-    const octokit = new Octokit({
+  private octokit: Octokit;
+  constructor() {
+    this.octokit = new Octokit({
       auth: process.env.TOKEN,
     });
+  }
 
+  async findAll(dto: FindCommitsDto) {
     try {
-      const result = await octokit.request(
+      const result = await this.octokit.request(
         'GET /repos/{owner}/{repo}/commits',
         {
-          owner: 'luis-alvarez1',
-          repo: 'Spoon-Knife',
+          owner: dto.owner,
+          repo: dto.repo,
         },
       );
+
+      return result;
     } catch (error) {
-      console.log(
-        `Error! Status: ${error.status}. Message: ${error.response.data.message}`,
-      );
+      throw new NotFoundException(error);
     }
-
-    return `This action returns all commits`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} commit`;
-  }
+  async findOne(id: string, dto: FindCommitsDto) {
+    try {
+      const result = await this.octokit.request(
+        'GET /repos/{owner}/{repo}/commits/{ref}',
+        {
+          owner: dto.owner,
+          repo: dto.repo,
+          ref: id,
+        },
+      );
 
-  update(id: number, updateCommitDto: UpdateCommitDto) {
-    return `This action updates a #${id} commit`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} commit`;
+      return result;
+    } catch (error) {
+      throw new NotFoundException(error);
+    }
   }
 }

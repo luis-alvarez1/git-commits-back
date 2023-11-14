@@ -1,6 +1,5 @@
 ## Description
-
-[Nest](https://github.com/nestjs/nest) Git commits backend app.
+Git commits backend app.
 
 ## API Documentation
 
@@ -9,27 +8,19 @@
 ## Installation
 
 ```bash
-$ yarn install
+# YARN
+yarn install
+# NPM
+npm install
 ```
 
 ## Running the app
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn run test
+# YARN
+yarn run start
+# NPM
+npm start
 ```
 
 ## Made by
